@@ -66,6 +66,9 @@ class RejectionMailer(ZeptoMailerBase):
         else:
             subject = f"Update Regarding Your Application - {self.event_config.name} ({applicant.team_name})"
 
+        subject = f"ITM Innovation Hackathon - Application Result"
+
+
         payload = self._build_common_payload(
             to_email=applicant.email,
             to_name=applicant.name,

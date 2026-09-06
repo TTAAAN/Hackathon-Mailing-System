@@ -61,10 +61,8 @@ class AcceptanceMailer(ZeptoMailerBase):
                 timestamp=utc_now_iso(),
             )
 
-        if applicant.is_solo:
-            subject = f"Congratulations! You are accepted to the {self.event_config.name}!"
-        else:
-            subject = f"Congratulations! Team {applicant.team_name} is accepted to the {self.event_config.name}!"
+        subject = f"Congratulations! Welcome to the ITM Innovation Hackathon!"
+
 
         payload = self._build_common_payload(
             to_email=applicant.email,
