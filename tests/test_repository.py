@@ -5,7 +5,6 @@ from pathlib import Path
 
 from mailing_system.db.repository import (
     ensure_sent_at_column,
-    ensure_ticket_code_column,
     load_recipients,
     update_sent_at_for,
 )
@@ -46,16 +45,6 @@ class RepositoryTests(unittest.TestCase):
         # Second call should return False (already exists)
         added_again = ensure_sent_at_column(self.db_path, self.table_name)
         self.assertFalse(added_again)
-
-    def test_ensure_ticket_code_column(self):
-        # Table already has ticket_code column -> should return False
-        self.assertFalse(ensure_ticket_code_column(self.db_path, self.table_name))
-
-        # Create table without ticket_code and test adding it
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute("CREATE TABLE other_table (full_name TEXT, email_address TEXT)")
-        self.assertTrue(ensure_ticket_code_column(self.db_path, "other_table"))
-        self.assertFalse(ensure_ticket_code_column(self.db_path, "other_table"))
 
     def test_load_recipients(self):
         recipients = load_recipients(self.db_path, self.table_name, require_ticket=True)

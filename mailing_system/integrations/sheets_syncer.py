@@ -13,7 +13,6 @@ import pandas as pd
 from mailing_system.db.manager import DatabaseManager
 from mailing_system.db.repository import (
     ensure_sent_at_column,
-    ensure_ticket_code_column,
     resolve_db_path,
 )
 from mailing_system.logger import get_logger
@@ -92,9 +91,6 @@ class SheetsSyncer:
             added_sent = ensure_sent_at_column(db_path, self.db.table_name)
             if added_sent:
                 logger.info("Added 'sent_at' column to table '%s'.", self.db.table_name)
-            added_ticket = ensure_ticket_code_column(db_path, self.db.table_name)
-            if added_ticket:
-                logger.info("Added 'ticket_code' column to table '%s'.", self.db.table_name)
         except Exception:
             logger.exception("Failed to ensure schema on '%s'.", self.db.table_name)
         return True
