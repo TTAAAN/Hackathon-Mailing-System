@@ -5,11 +5,10 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 from mailing_system.config import load_config
-from mailing_system.core.models import Applicant, DeliveryResult, EventConfig
+from mailing_system.core.models import EventConfig
 from mailing_system.db.repository import load_recipients, resolve_db_path, update_sent_at_for
 from mailing_system.logger import get_logger
 from mailing_system.mailers.acceptance import AcceptanceMailer
@@ -61,12 +60,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 
 def run_send(
-    mode: str = "accept",
-    confirm: bool = False,
-    limit: Optional[int] = None,
-    region: str = "us",
-    token: Optional[str] = None,
-    config_file: Optional[str] = None,
+        mode: str = "accept",
+        confirm: bool = False,
+        limit: Optional[int] = None,
+        region: str = "us",
+        token: Optional[str] = None,
+        config_file: Optional[str] = None,
 ) -> int:
     config = load_config(config_file)
     db_cfg = config.get("database", {})

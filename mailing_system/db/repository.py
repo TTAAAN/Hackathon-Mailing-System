@@ -5,7 +5,7 @@ from __future__ import annotations
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Set
+from typing import Any, Iterable, List, Optional, Set
 
 from mailing_system.config import PROJECT_ROOT
 from mailing_system.core.models import Applicant
@@ -49,10 +49,10 @@ def ensure_sent_at_column(db_path: Path, table_name: str) -> bool:
 
 
 def update_sent_at_for(
-    db_path: Path,
-    table_name: str,
-    emails: Iterable[str],
-    sent_ts: Optional[str] = None,
+        db_path: Path,
+        table_name: str,
+        emails: Iterable[str],
+        sent_ts: Optional[str] = None,
 ) -> int:
     """Stamp ``sent_at`` timestamp on rows matching the provided email addresses."""
     cleaned_emails = [str(e).strip() for e in emails if str(e).strip()]
@@ -87,10 +87,10 @@ def clean_text(value: Any) -> str:
 
 
 def load_recipients(
-    db_path: Path,
-    table_name: str,
-    skip_sent: bool = True,
-    require_ticket: bool = False,
+        db_path: Path,
+        table_name: str,
+        skip_sent: bool = True,
+        require_ticket: bool = False,
 ) -> List[Applicant]:
     """Load recipients from the SQLite database table as Applicant objects."""
     if not db_path.exists():

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Optional
 
 import gspread
 import numpy as np
@@ -39,31 +38,11 @@ class SheetsSyncer:
         df.replace("", np.nan, inplace=True)
         df.columns = [str(col).strip().replace(" ", "_").lower() for col in df.columns]
 
-        # Check required ticket_code column
-        ticket_col = next((col for col in df.columns if col in ("ticket_code", "ticket_id", "ticket")), None)
-        if not ticket_col:
-            logger.error("Worksheet is missing required 'ticket_code' column. Canceling the whole procedure.")
-            return False
-
-        # Validate that each row has ticket_code
-        ticket_series = df[ticket_col].astype(str).str.strip()
-        invalid_mask = (
-            df[ticket_col].isna()
-            | (ticket_series == "")
-            | (ticket_series.str.lower() == "nan")
-            | (ticket_series.str.lower() == "none")
-        )
-        if invalid_mask.any():
-            logger.error(
-                "Found %d row(s) missing 'ticket_code'. Canceling the whole procedure.",
-                int(invalid_mask.sum()),
-            )
-            return False
-
-        # Keep only required recipient fields
+        # Keep only required recipient fields (ticket_code is optional - error thrown at QR send time)
         name_col = next((col for col in df.columns if col in ("full_name", "name")), None)
         email_col = next((col for col in df.columns if col in ("email_address", "email")), None)
         team_col = next((col for col in df.columns if col in ("team_name", "team")), None)
+        ticket_col = next((col for col in df.columns if col in ("ticket_code", "ticket_id", "ticket")), None)
 
         keep_cols = [col for col in (name_col, email_col, team_col, ticket_col) if col is not None]
         if "sent_at" in df.columns:

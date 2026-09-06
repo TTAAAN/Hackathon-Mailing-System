@@ -1,6 +1,6 @@
 database:
-  name: "attendance_db"
-  table_name: "attendance_record"
+  name: "participant"
+  table_name: "participant_record"
 
 google_sheets:
   credentials_path: "credentials.json"

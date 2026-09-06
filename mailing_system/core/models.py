@@ -19,7 +19,7 @@ class EventConfig:
     organizer_address: str = "American University of Phnom Penh, Phnom Penh, Cambodia"
     support_email: str = "support@itm-hackathon.tech"
     banner_image_path: Union[str, Path] = (
-        PROJECT_ROOT / "mailing_system" / "templates" / "assets" / "banner.png"
+            PROJECT_ROOT / "mailing_system" / "templates" / "assets" / "banner.png"
     )
     telegram_link: str = ""
 
