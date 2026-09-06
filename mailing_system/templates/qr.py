@@ -26,16 +26,6 @@ class PassTemplate:
       <td align="center" style="padding: 20px 12px;">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 560px; text-align: left;">
           <tr>
-            <td style="padding-bottom: 24px;">
-              <img src="cid:banner_img" alt="{event.name} Banner" width="560" style="display: block; width: 100%; max-width: 560px; height: auto; border: 0;" />
-            </td>
-          </tr>
-          <tr>
-            <td style="padding-bottom: 16px; font-size: 22px; font-weight: bold; color: #111111;">
-              Your Official Hackathon Entry Pass
-            </td>
-          </tr>
-          <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
               Hi {attendee.name},<br /><br />
               Once again, <strong>huge congratulations on {attendee.team_name} being selected for the {event.name}!</strong> We were incredibly impressed by your application and are thrilled to welcome you.<br /><br />
@@ -86,6 +76,14 @@ class PassTemplate:
               Support: <a href="mailto:{event.support_email}" style="color: #888888;">{event.support_email}</a>
             </td>
           </tr>
+
+          <!-- Banner -->
+          <tr>
+            <td style="padding-top: 32px;">
+              <img src="cid:banner_img" alt="{event.name} Banner" width="560" style="display: block; width: 100%; max-width: 560px; height: auto; border: 0;" />
+            </td>
+          </tr>
+
         </table>
       </td>
     </tr>

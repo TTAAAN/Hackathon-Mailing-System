@@ -40,13 +40,6 @@ class RejectionTemplate:
       <td align="center" style="padding: 24px 12px;">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 560px; text-align: left;">
 
-          <!-- Banner -->
-          <tr>
-            <td style="padding-bottom: 24px;">
-              <img src="cid:banner_img" alt="{event.name} Banner" width="560" style="display: block; width: 100%; max-width: 560px; height: auto; border: 0;" />
-            </td>
-          </tr>
-
           <!-- Greeting & Appreciation -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
@@ -87,6 +80,13 @@ class RejectionTemplate:
               Warm regards,<br />
               <strong>{event.organizer_name}</strong> &middot; {event.organizer_address}<br />
               Support: <a href="mailto:{event.support_email}" style="color: #888888;">{event.support_email}</a>
+            </td>
+          </tr>
+
+          <!-- Banner -->
+          <tr>
+            <td style="padding-top: 32px;">
+              <img src="cid:banner_img" alt="{event.name} Banner" width="560" style="display: block; width: 100%; max-width: 560px; height: auto; border: 0;" />
             </td>
           </tr>
 
