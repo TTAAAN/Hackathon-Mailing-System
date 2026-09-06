@@ -1,8 +1,9 @@
 import unittest
 from unittest.mock import patch
 
-from mailing_system.core.models import Applicant, DeliveryResult
+from mailing_system.core.models import Applicant, Attendee, DeliveryResult
 from mailing_system.mailers.acceptance import AcceptanceMailer
+from mailing_system.mailers.qr import QRMailer
 from mailing_system.mailers.rejection import RejectionMailer
 
 
@@ -30,6 +31,29 @@ class MailerTests(unittest.TestCase):
             self.assertEqual(res.recipient_email, "alice@example.com")
             self.assertEqual(res.name, "Alice")
             self.assertEqual(res.team_name, "TeamAlpha")
+
+    def test_qr_pass_success(self):
+        attendee = Attendee(name="Alice", email="alice@example.com", team_name="TeamAlpha", ticket_id="TCK-100")
+        with patch.object(
+            QRMailer,
+            "_dispatch",
+            return_value=(True, 200, {"data": [{"code": "TM_SUCCESS"}]}, "req-qr-1", 1, DummyResponse(200)),
+        ):
+            mailer = QRMailer()
+            res = mailer.send_pass(attendee)
+            self.assertEqual(res.status, "SUCCESS")
+            self.assertEqual(res.recipient_email, "alice@example.com")
+            self.assertEqual(res.name, "Alice")
+            self.assertEqual(res.team_name, "TeamAlpha")
+            self.assertEqual(res.ticket_id, "TCK-100")
+
+    def test_qr_pass_missing_ticket(self):
+        attendee = Attendee(name="Alice", email="alice@example.com", team_name="TeamAlpha", ticket_id="")
+        mailer = QRMailer()
+        res = mailer.send_pass(attendee)
+        self.assertEqual(res.status, "FAILED")
+        self.assertEqual(res.zepto_code, "LOCAL_QR_ERROR")
+        self.assertIn("ticket_id is required", res.error_message)
 
     def test_rejection_success(self):
         applicant = Applicant(name="Bob", email="bob@example.com", team_name="TeamBeta")

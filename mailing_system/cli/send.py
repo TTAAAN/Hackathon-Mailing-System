@@ -1,4 +1,4 @@
-"""CLI entry point for dispatching acceptance and rejection emails."""
+"""CLI entry point for dispatching acceptance, rejection, and QR pass emails."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from mailing_system.core.models import Applicant, DeliveryResult, EventConfig
 from mailing_system.db.repository import load_recipients, resolve_db_path, update_sent_at_for
 from mailing_system.logger import get_logger
 from mailing_system.mailers.acceptance import AcceptanceMailer
+from mailing_system.mailers.qr import QRMailer
 from mailing_system.mailers.rejection import RejectionMailer
 
 logger = get_logger("cli.send")
@@ -21,13 +22,13 @@ logger = get_logger("cli.send")
 def build_arg_parser() -> argparse.ArgumentParser:
     """Create the CLI argument parser for sending emails."""
     parser = argparse.ArgumentParser(
-        description="Mailing utility: send acceptance or rejection emails to recipients."
+        description="Mailing utility: send acceptance, rejection, or QR pass emails to recipients."
     )
     parser.add_argument(
         "--mode",
-        choices=("accept", "reject"),
+        choices=("accept", "reject", "qr", "pass"),
         default="accept",
-        help="Type of notification to send: accept or reject (default: accept).",
+        help="Type of notification to send: accept, reject, qr, or pass (default: accept).",
     )
     parser.add_argument(
         "--confirm",
@@ -73,9 +74,10 @@ def run_send(
     table_name = db_cfg.get("table_name", "recipients")
     db_path = resolve_db_path(db_name)
 
+    require_ticket = mode in ("qr", "pass")
     logger.info("Loading recipients from %s [%s] (mode=%s)...", db_path, table_name, mode)
     try:
-        recipients = load_recipients(db_path, table_name, skip_sent=True)
+        recipients = load_recipients(db_path, table_name, skip_sent=True, require_ticket=require_ticket)
     except Exception as exc:
         logger.error("Failed to load records from database: %s", exc)
         return 1
@@ -83,6 +85,12 @@ def run_send(
     if not recipients:
         logger.info("No unsent recipients found in %s.%s.", db_name, table_name)
         return 0
+
+    if require_ticket:
+        missing_tickets = [r for r in recipients if not (r.ticket_id or "").strip()]
+        if missing_tickets:
+            logger.error("Found %d recipient(s) without ticket_code. Canceling procedure.", len(missing_tickets))
+            return 1
 
     if limit and limit > 0:
         recipients = recipients[:limit]
@@ -94,7 +102,8 @@ def run_send(
         logger.info("DRY RUN: no emails will be sent. Re-run with --confirm to attempt delivery.")
         preview = recipients[:10]
         for r in preview:
-            logger.info("DRY RUN: %s <%s> | Team: %s", r.name, r.email, r.team_name)
+            ticket_info = f" | Ticket: {r.ticket_id}" if r.ticket_id else ""
+            logger.info("DRY RUN: %s <%s> | Team: %s%s", r.name, r.email, r.team_name, ticket_info)
         if len(recipients) > len(preview):
             logger.info("DRY RUN: ... and %d more records", len(recipients) - len(preview))
         return 0
@@ -128,7 +137,17 @@ def run_send(
     reply_to_email = mail_cfg.get("reply_to_email")
     reply_to_name = mail_cfg.get("reply_to_name")
 
-    if mode == "accept":
+    if mode in ("qr", "pass"):
+        mailer = QRMailer(
+            token=token,
+            region=region,
+            sender_email=sender_email,
+            sender_name=sender_name,
+            reply_to_email=reply_to_email,
+            reply_to_name=reply_to_name,
+            event_config=event_config,
+        )
+    elif mode == "accept":
         mailer = AcceptanceMailer(
             token=token,
             region=region,

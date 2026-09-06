@@ -90,6 +90,7 @@ def load_recipients(
     db_path: Path,
     table_name: str,
     skip_sent: bool = True,
+    require_ticket: bool = False,
 ) -> List[Applicant]:
     """Load recipients from the SQLite database table as Applicant objects."""
     if not db_path.exists():
@@ -102,12 +103,16 @@ def load_recipients(
         name_col = pick_column(cols, ("full_name", "name"))
         email_col = pick_column(cols, ("email_address", "email"))
         team_col = pick_column(cols, ("team_name", "team"))
+        ticket_col = pick_column(cols, ("ticket_code", "ticket_id", "ticket"))
 
         missing = [
             label
             for label, col in (("full name", name_col), ("email address", email_col))
             if col is None
         ]
+        if require_ticket and ticket_col is None:
+            missing.append("ticket_code")
+
         if missing:
             raise ValueError(
                 f"Table '{table_name}' is missing required columns: {', '.join(missing)}"
@@ -116,6 +121,8 @@ def load_recipients(
         selected_cols = [name_col, email_col]
         if team_col:
             selected_cols.append(team_col)
+        if ticket_col:
+            selected_cols.append(ticket_col)
 
         where_clauses = [
             f"{email_col} IS NOT NULL",
@@ -132,11 +139,25 @@ def load_recipients(
             name = clean_text(row[name_col])
             email = clean_text(row[email_col])
             team = clean_text(row[team_col]) if team_col else "Solo Participant"
+            ticket_id = clean_text(row[ticket_col]) if ticket_col else ""
 
             if not name or not email:
                 logger.warning("Skipping row with missing name or email: %r", dict(row))
                 continue
 
-            applicants.append(Applicant(name=name, email=email, team_name=team or "Solo Participant"))
+            if require_ticket and not ticket_id:
+                logger.error("Recipient '%s' is missing 'ticket_code'. Canceling procedure.", email)
+                raise ValueError(
+                    f"Recipient row for '{email}' is missing required 'ticket_code'. Canceling procedure."
+                )
+
+            applicants.append(
+                Applicant(
+                    name=name,
+                    email=email,
+                    team_name=team or "Solo Participant",
+                    ticket_id=ticket_id,
+                )
+            )
 
         return applicants

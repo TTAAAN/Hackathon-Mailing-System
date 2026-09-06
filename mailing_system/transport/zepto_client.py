@@ -121,6 +121,7 @@ class ZeptoMailerBase:
         dispatch: tuple,
         name: Optional[str] = None,
         team_name: Optional[str] = None,
+        ticket_id: Optional[str] = None,
     ) -> DeliveryResult:
         """Map dispatch result tuple to DeliveryResult object."""
         success, http_code, res_json, request_id, attempts, response = dispatch
@@ -132,6 +133,7 @@ class ZeptoMailerBase:
             ) or "TM_SUCCESS"
             return DeliveryResult(
                 recipient_email=recipient_email,
+                ticket_id=ticket_id,
                 name=name,
                 team_name=team_name,
                 status="SUCCESS",
@@ -154,6 +156,7 @@ class ZeptoMailerBase:
         )
         return DeliveryResult(
             recipient_email=recipient_email,
+            ticket_id=ticket_id,
             name=name,
             team_name=team_name,
             status="FAILED",
