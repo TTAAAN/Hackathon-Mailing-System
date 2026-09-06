@@ -20,7 +20,7 @@ class RejectionTemplate:
         else:
             greeting = f"Dear {applicant.name},"
             opening = (
-                f"Thank you and team {applicant.team_name} for taking the time and initiative to apply "
+                f"Thank you and team '{applicant.team_name}' for taking the time and initiative to apply "
                 f"for the {event.name}. Our team deeply appreciates the thought and dedication your team "
                 f"invested in this submission."
             )
@@ -107,7 +107,7 @@ class RejectionTemplate:
             submission_text = "your application"
         else:
             opening = (
-                f"Thank you and team {applicant.team_name} for taking the time and initiative to apply "
+                f"Thank you and team '{applicant.team_name}' for taking the time and initiative to apply "
                 f"for the {event.name}. Our team deeply appreciates the thought and dedication your team "
                 f"invested in this submission."
             )

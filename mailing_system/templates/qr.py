@@ -28,7 +28,7 @@ class PassTemplate:
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
               Hi {attendee.name},<br /><br />
-              Once again, <strong>huge congratulations on {attendee.team_name} being selected for the {event.name}!</strong> We were incredibly impressed by your application and are thrilled to welcome you.<br /><br />
+              Once again, <strong>huge congratulations on '{attendee.team_name}' being selected for the {event.name}!</strong><br /><br />
               Below is your <strong>official check-in ticket</strong>. You will need this pass to access the venue on the day of the event.
             </td>
           </tr>
@@ -57,7 +57,7 @@ class PassTemplate:
                <table role="presentation" width="100%" cellspacing="0" cellpadding="8" border="0" style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee; font-size: 14px;">
                  <tr><td width="120" style="color: #666666; font-weight: bold;">Attendee ID:</td><td style="color: #111111;">{attendee.name}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Participant ID:</td><td style="color: #111111;">{attendee.ticket_id}</td></tr>
-                 <tr><td style="color: #666666; font-weight: bold;">Team Name:</td><td style="color: #111111; font-weight: bold;">{attendee.team_name}</td></tr>
+                 <tr><td style="color: #666666; font-weight: bold;">Team Name:</td><td style="color: #111111; font-weight: bold;">'{attendee.team_name}'</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Email:</td><td style="color: #111111;">{attendee.email}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Venue:</td><td style="color: #111111;">{event.venue}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Date:</td><td style="color: #111111;">{event.date}</td></tr>
@@ -100,7 +100,7 @@ class PassTemplate:
             f"Participant ID: {attendee.ticket_id}\n\n"
             f"PASS DETAILS\n"
             f"Attendee: {attendee.name}\n"
-            f"Team: {attendee.team_name}\n"
+            f"Team: '{attendee.team_name}'\n"
             f"Email: {attendee.email}\n"
             f"Venue: {event.venue}\n"
             f"Date: {event.date}\n\n"
