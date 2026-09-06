@@ -20,7 +20,7 @@ class AcceptanceTemplate:
             greeting = f"Dear {applicant.name},"
             opening_paragraph = (
                 f"On behalf of the entire organizing committee, <strong>we are thrilled to officially "
-                f"congratulate you and team '{applicant.team_name}' on being accepted to the {event.name}!</strong>"
+                f"congratulate your team '{applicant.team_name}' on being accepted to the {event.name}!</strong>"
             )
 
         telegram_section = (

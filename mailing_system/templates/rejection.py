@@ -51,14 +51,22 @@ class RejectionTemplate:
           <!-- Decision & Capacity -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              We received an extraordinary volume of exceptional submissions this year. Due to strict physical venue capacity at {event.venue}, our selection process was intensely competitive, and <strong>we regret to inform you that we are unable to offer {submission_text} an invitation to participate in this edition.</strong>
+              We received an extraordinary volume of exceptional submissions this year. Due to strict physical venue capacity at {event.venue}, our selection process was intensely competitive, and <strong>we regret to inform you that we are unable to offer {submission_text} an invitation to participate in this season.</strong>
             </td>
           </tr>
 
           <!-- Reassurance & Encouragement -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              Please know that <strong>this decision is not a reflection of your talent, capability, or potential as a creator.</strong> With a highly competitive applicant pool, many impressive submissions simply could not be accommodated. Your trajectory as a builder is never defined by a single weekend—what matters most is your curiosity and drive to keep solving real problems.
+              Please know that <strong>this decision is not a reflection of your talent, capability, or potential as a creator.</strong> With a highly competitive applicant pool, many impressive submissions simply could not be accommodated. Your trajectory as a builder is never defined by a single weekend. What matters most is your curiosity and drive to keep solving real problems.
+            </td>
+          </tr>
+
+          <!-- Future Opportunities -->
+          <tr>
+            <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
+              We hope this experience inspires you to keep building. We regularly open applications for future hackathons and cohorts, and we would love to see your ideas again. Follow our channels for announcements on upcoming events!<br /><br />
+              <strong>Keep coding, keep creating, and don't give up!</strong>
             </td>
           </tr>
           <tr>
