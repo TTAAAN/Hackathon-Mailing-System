@@ -58,7 +58,7 @@ class RejectionTemplate:
           <!-- Reassurance & Encouragement -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              Please know that <strong>this decision is not a reflection of your talent, capability, or potential as a creator.</strong> With razor-thin margins between applications, many impressive submissions simply could not be accommodated. Your trajectory as a builder is never defined by a single weekend—what matters most is your curiosity and drive to keep solving real problems.
+              Please know that <strong>this decision is not a reflection of your talent, capability, or potential as a creator.</strong> With a highly competitive applicant pool, many impressive submissions simply could not be accommodated. Your trajectory as a builder is never defined by a single weekend—what matters most is your curiosity and drive to keep solving real problems.
             </td>
           </tr>
           <tr>
@@ -120,7 +120,7 @@ class RejectionTemplate:
             f"venue capacity at {event.venue}, our selection process was intensely competitive, and we regret to "
             f"inform you that we are unable to offer {submission_text} an invitation to participate in this edition.\n\n"
             f"Please know that this decision is in no way a reflection of your talent, capability, or potential as "
-            f"a creator. With razor-thin margins between applications, many impressive submissions simply could not "
+            f"a creator. With a highly competitive applicant pool, many impressive submissions simply could not "
             f"be accommodated. Your trajectory as a builder is never defined by a single weekend—what matters most "
             f"is your curiosity and drive to keep solving real problems.\n\n"
             f"We strongly encourage you to continue developing your ideas, and we would love to see your application "
