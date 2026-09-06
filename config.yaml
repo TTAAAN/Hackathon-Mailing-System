@@ -1,0 +1,26 @@
+database:
+  name: "attendance_db"
+  table_name: "attendance_record"
+
+google_sheets:
+  credentials_path: "credentials.json"
+  spreadsheet_key: "1bcHZqaItAnCtkSOwMhGf9Ds8P-1_TsJLzMrRMxAif5I"
+  worksheet_id: 240807042
+  scopes:
+    - "https://www.googleapis.com/auth/spreadsheets"
+
+mailing:
+  sender_email: "result@mail.itm-hackathon.tech"
+  sender_name: "ITM Innovation Hackathon 2026"
+  reply_to_email: "support@itm-hackathon.tech"
+  reply_to_name: "ITM Hackathon Support"
+  default_region: "us"
+
+event:
+  name: "ITM Innovation Hackathon 2026"
+  date: "12, 13, and 19th September 2026"
+  venue: "American University of Phnom Penh (AUPP)"
+  organizer_name: "ITM Innovation Hackathon Team"
+  organizer_address: "American University of Phnom Penh, Phnom Penh, Cambodia"
+  support_email: "support@itm-hackathon.tech"
+  telegram_link: ""

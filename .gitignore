@@ -1,0 +1,7 @@
+.idea
+.env
+*.db
+credentials.json
+qr_codes
+__pycache__
+logs
