@@ -38,7 +38,7 @@ class Attendee:
 
     @property
     def is_solo(self) -> bool:
-        return not self.team_name or self.team_name.strip().lower() == "solo participant"
+        return not self.team_name or self.team_name.strip().lower() == "solo applicant"
 
 
 @dataclass(frozen=True)
@@ -46,7 +46,7 @@ class Applicant:
     """Recipient data model representing a hackathon applicant / attendee."""
     name: str
     email: str
-    team_name: str = "Solo Participant"
+    team_name: str = "Solo Applicant"
     ticket_id: str = ""
 
     @property
@@ -55,7 +55,7 @@ class Applicant:
 
     @property
     def is_solo(self) -> bool:
-        return not self.team_name or self.team_name.strip().lower() == "solo participant"
+        return not self.team_name or self.team_name.strip().lower() == "solo applicant"
 
 
 @dataclass

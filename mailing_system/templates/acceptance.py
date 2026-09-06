@@ -20,7 +20,7 @@ class AcceptanceTemplate:
             greeting = f"Dear {applicant.name},"
             opening_paragraph = (
                 f"On behalf of the entire organizing committee, <strong>we are thrilled to officially "
-                f"congratulate you and team {applicant.team_name} on being accepted to the {event.name}!</strong>"
+                f"congratulate you and team '{applicant.team_name}' on being accepted to the {event.name}!</strong>"
             )
 
         telegram_section = (
@@ -103,7 +103,7 @@ class AcceptanceTemplate:
 
     @staticmethod
     def render_plain(applicant: Applicant, event: EventConfig) -> str:
-        team_mention = "" if applicant.is_solo else f" and team {applicant.team_name}"
+        team_mention = "" if applicant.is_solo else f" and team '{applicant.team_name}'"
         telegram_info = (
             f"Please join our official Participant Telegram Group right away for all announcements and updates:\n{event.telegram_link}\n\n"
             if event.telegram_link
