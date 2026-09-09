@@ -9,7 +9,7 @@ from mailing_system.config import PROJECT_ROOT
 from mailing_system.core.models import Applicant, Attendee, DeliveryResult, EventConfig
 from mailing_system.logger import get_logger
 from mailing_system.qrcode_generator import build_qr_png_base64
-from mailing_system.templates.qr import PassTemplate
+from mailing_system.templates.qr import QRTemplate
 from mailing_system.transport.utils import encode_image, send_and_report, utc_now_iso
 from mailing_system.transport.zepto_client import ZeptoMailerBase
 
@@ -91,8 +91,8 @@ class QRMailer(ZeptoMailerBase):
             to_email=attendee.email,
             to_name=attendee.name,
             subject=f"Your Hackathon Entry Pass for '{attendee.name}' ({attendee.team_name})",
-            html_body=PassTemplate.render_html(attendee, self.event_config),
-            text_body=PassTemplate.render_plain(attendee, self.event_config),
+            html_body=QRTemplate.render_html(attendee, self.event_config),
+            text_body=QRTemplate.render_plain(attendee, self.event_config),
             inline_images=[
                 {"content": self._cached_banner_b64, "mime_type": "image/png", "cid": "banner_img"},
                 {"content": qr_b64, "mime_type": "image/png", "cid": "qr_img"},

@@ -7,7 +7,7 @@ from typing import Union
 from mailing_system.core.models import Applicant, Attendee, EventConfig
 
 
-class PassTemplate:
+class QRTemplate:
     """Generates customized HTML and plain-text entry pass email bodies."""
 
     @staticmethod
@@ -43,7 +43,7 @@ class PassTemplate:
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
                 <tr>
                   <td align="center" style="border: 1px solid #cccccc; padding: 18px; background-color: #ffffff; border-radius: 8px;">
-                    <img src="cid:qr_img" alt="Entry QR Code" width="200" height="200" style="display: block; width: 200; height: 200; max-width: 100%; border: 0;" />
+                    <img src="cid:qr_img" alt="Entry QR Code" width="200" height="200" style="display: block; width: 200px; height: 200px; max-width: 100%; border: 0;" />
                     <div style="margin-top: 14px; font-family: Courier, monospace; font-size: 16px; font-weight: bold; color: #111111; letter-spacing: 0.5px;">
                       Point to Scanner
                     </div>
@@ -55,9 +55,9 @@ class PassTemplate:
           <tr>
             <td style="padding-bottom: 24px;">
                <table role="presentation" width="100%" cellspacing="0" cellpadding="8" border="0" style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee; font-size: 14px;">
-                 <tr><td width="120" style="color: #666666; font-weight: bold;">Attendee ID:</td><td style="color: #111111;">{attendee.name}</td></tr>
+                 <tr><td width="120" style="color: #666666; font-weight: bold;">Attendee Name:</td><td style="color: #111111;">{attendee.name}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Participant ID:</td><td style="color: #111111;">{attendee.ticket_id}</td></tr>
-                 <tr><td style="color: #666666; font-weight: bold;">Team Name:</td><td style="color: #111111; font-weight: bold;">'{attendee.team_name}'</td></tr>
+                 <tr><td style="color: #666666; font-weight: bold;">Team Name:</td><td style="color: #111111;">{attendee.team_name}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Email:</td><td style="color: #111111;">{attendee.email}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Venue:</td><td style="color: #111111;">{event.venue}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Date:</td><td style="color: #111111;">{event.date}</td></tr>
@@ -67,13 +67,14 @@ class PassTemplate:
           <tr>
             <td style="padding-bottom: 20px; font-size: 14px; color: #333333; line-height: 1.6;">
               <strong>Questions or need support?</strong><br />
-              Reply directly to this email or reach out to <a href="mailto:{event.support_email}" style="color: #1a5fb4;">{event.support_email}</a>.
+              Reply directly to this email or reach out to <a href="mailto:{event.support_email}" style="color: #1a5fb4;">{event.support_email}</a>.<br />
+              For fast support, message us on Telegram: <a href="https://t.me/ITMTechnicalSupport" target="_blank" style="color: #1a5fb4; text-decoration: none; font-weight: bold;">@ITMTechnicalSupport</a>
             </td>
           </tr>
           <tr>
             <td style="padding-top: 16px; border-top: 1px solid #eeeeee; font-size: 12px; color: #888888; line-height: 1.6;">
               {event.organizer_name} &middot; {event.organizer_address}<br />
-              Support: <a href="mailto:{event.support_email}" style="color: #888888;">{event.support_email}</a>
+              Email: <a href="mailto:{event.support_email}" style="color: #888888;">{event.support_email}</a> &middot; Telegram: <a href="https://t.me/ITMTechnicalSupport" target="_blank" style="color: #888888;">@ITMTechnicalSupport</a>
             </td>
           </tr>
 
@@ -106,8 +107,6 @@ class PassTemplate:
             f"Date: {event.date}\n\n"
             f"Please present your Participant ID or QR Code at the registration desk.\n\n"
             f"Need help? Contact: {event.support_email}\n"
+            f"Fast Support (Telegram): @ITMTechnicalSupport (https://t.me/ITMTechnicalSupport)\n"
             f"--\n{event.organizer_name}\n{event.organizer_address}"
         )
-
-
-QRTemplate = PassTemplate

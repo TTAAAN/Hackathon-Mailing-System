@@ -2,7 +2,7 @@ import unittest
 
 from mailing_system.core.models import Applicant, Attendee, EventConfig
 from mailing_system.templates.acceptance import AcceptanceTemplate
-from mailing_system.templates.qr import PassTemplate, QRTemplate
+from mailing_system.templates.qr import QRTemplate
 from mailing_system.templates.rejection import RejectionTemplate
 
 
@@ -38,8 +38,8 @@ class TemplateTests(unittest.TestCase):
 
     def test_qr_pass_template(self):
         attendee = Attendee(name="Alice", email="alice@example.com", team_name="TeamAlpha", ticket_id="TCK-999")
-        html = PassTemplate.render_html(attendee, self.event)
-        plain = PassTemplate.render_plain(attendee, self.event)
+        html = QRTemplate.render_html(attendee, self.event)
+        plain = QRTemplate.render_plain(attendee, self.event)
 
         self.assertIn("Your Official Hackathon Entry Pass", html)
         self.assertIn("TCK-999", html)
