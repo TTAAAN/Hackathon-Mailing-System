@@ -32,7 +32,7 @@ class RejectionTemplate:
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ITM Innovation Hackathon - Application Result</title>
+  <title>Application Update - {event.name}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.6; color: #222222;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff">
@@ -48,45 +48,39 @@ class RejectionTemplate:
             </td>
           </tr>
 
-          <!-- Decision & Capacity -->
+          <!-- Decision -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              We received an extraordinary volume of exceptional submissions this year. Due to strict physical venue capacity at {event.venue}, our selection process was intensely competitive, and <strong>we regret to inform you that we are unable to offer {submission_text} an invitation to participate in this season.</strong>
+              Following careful review of all submissions, we regret to inform you that {submission_text} was not selected for this season. We received numerous impressive applications, and this was a genuinely difficult decision.
             </td>
           </tr>
 
-          <!-- Reassurance & Encouragement -->
+          <!-- Reassurance -->
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              Please know that <strong>this decision is not a reflection of your talent, capability, or potential as a creator.</strong> With a highly competitive applicant pool, many impressive submissions simply could not be accommodated. Your trajectory as a builder is never defined by a single weekend. What matters most is your curiosity and drive to keep solving real problems.
+              We want to emphasize that this outcome does not diminish the value of your work or potential. Many qualified candidates did not advance simply due to limited spots. We encourage you to keep pursuing your vision.
             </td>
           </tr>
 
-          <!-- Future Opportunities -->
-          <tr>
-            <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
-              We hope this experience inspires you to keep building. We regularly open applications for future hackathons and cohorts, and we would love to see your ideas again. Follow our channels for announcements on upcoming events!<br /><br />
-              <strong>Keep coding, keep creating, and don't give up!</strong>
-            </td>
-          </tr>
+          <!-- Encouragement -->
           <tr>
             <td style="padding-bottom: 20px; font-size: 15px; color: #333333; line-height: 1.6;">
-              We strongly encourage you to continue developing your ideas, and we would love to see your application again in our future events and cohorts.
+              We strongly encourage you to continue developing your ideas, and we would love to see your application again in our next seasons. We hope you will stay connected with us and follow our updates for our next seasons.
             </td>
           </tr>
 
           <!-- Support & Questions -->
           <tr>
             <td style="padding-bottom: 24px; font-size: 15px; color: #333333; line-height: 1.6;">
-              If you have any questions, please feel free to reply directly to this email or reach us at <a href="mailto:{event.support_email}" style="color: #1a5fb4;">{event.support_email}</a>.
+              Should you have any questions, feel free to reach out at <a href="mailto:{event.support_email}" style="color: #1a5fb4;">{event.support_email}</a>.
             </td>
           </tr>
 
           <!-- Sign-off -->
           <tr>
             <td style="padding-top: 16px; border-top: 1px solid #eeeeee; font-size: 12px; color: #888888; line-height: 1.6;">
-              Warm regards,<br />
-              <strong>{event.organizer_name}</strong> &middot; {event.organizer_address}<br />
+              Best regards,<br />
+              <strong>{event.organizer_name}</strong><br />
               Support: <a href="mailto:{event.support_email}" style="color: #888888;">{event.support_email}</a>
             </td>
           </tr>
@@ -124,18 +118,17 @@ class RejectionTemplate:
         return (
             f"Dear {applicant.name},\n\n"
             f"{opening}\n\n"
-            f"We received an extraordinary volume of exceptional submissions this year. Due to strict physical "
-            f"venue capacity at {event.venue}, our selection process was intensely competitive, and we regret to "
-            f"inform you that we are unable to offer {submission_text} an invitation to participate in this edition.\n\n"
-            f"Please know that this decision is in no way a reflection of your talent, capability, or potential as "
-            f"a creator. With a highly competitive applicant pool, many impressive submissions simply could not "
-            f"be accommodated. Your trajectory as a builder is never defined by a single weekend—what matters most "
-            f"is your curiosity and drive to keep solving real problems.\n\n"
-            f"We strongly encourage you to continue developing your ideas, and we would love to see your application "
-            f"again in our future events and cohorts.\n\n"
-            f"If you have any questions, please feel free to reply directly to this email or reach us at {event.support_email}.\n\n"
-            f"Warm regards,\n"
+            f"Following careful review of all submissions, we regret to inform you that {submission_text} was not "
+            f"selected for this season. We received numerous impressive applications, and this was a genuinely "
+            f"difficult decision.\n\n"
+            f"We want to emphasize that this outcome does not diminish the value of your work or potential. Many "
+            f"qualified candidates did not advance simply due to limited spots. We encourage you to keep pursuing "
+            f"your vision.\n\n"
+            f"We strongly encourage you to continue developing your ideas, and we would love to see your "
+            f"application again in our next seasons. We hope you will stay connected with us and follow our "
+            f"updates for future opportunities and programs.\n\n"
+            f"Should you have any questions, feel free to reach out at {event.support_email}.\n\n"
+            f"Best regards,\n"
             f"{event.organizer_name}\n"
-            f"{event.organizer_address}\n"
-            f"{event.support_email}"
+            f"Support: {event.support_email}"
         )
