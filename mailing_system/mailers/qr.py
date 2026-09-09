@@ -138,4 +138,3 @@ class QRMailer(ZeptoMailerBase):
 
 
 ZeptoMailer = QRMailer
-PassMailer = QRMailer

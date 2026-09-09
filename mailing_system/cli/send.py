@@ -1,4 +1,4 @@
-"""CLI entry point for dispatching acceptance, rejection, and QR pass emails."""
+"""CLI entry point for dispatching acceptance, rejection, QR pass, and dropped participant emails."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from mailing_system.core.models import EventConfig
 from mailing_system.db.repository import load_recipients, resolve_db_path, update_sent_at_for
 from mailing_system.logger import get_logger
 from mailing_system.mailers.acceptance import AcceptanceMailer
+from mailing_system.mailers.dropped import DroppedMailer
 from mailing_system.mailers.qr import QRMailer
 from mailing_system.mailers.rejection import RejectionMailer
 
@@ -21,13 +22,13 @@ logger = get_logger("cli.send")
 def build_arg_parser() -> argparse.ArgumentParser:
     """Create the CLI argument parser for sending emails."""
     parser = argparse.ArgumentParser(
-        description="Mailing utility: send acceptance, rejection, or QR pass emails to recipients."
+        description="Mailing utility: send acceptance, rejection, QR pass, or dropped notification emails to recipients."
     )
     parser.add_argument(
         "--mode",
-        choices=("accept", "reject", "qr", "pass"),
+        choices=("accept", "reject", "qr", "pass", "dropped"),
         default="accept",
-        help="Type of notification to send: accept, reject, qr, or pass (default: accept).",
+        help="Type of notification to send: accept, reject, qr, pass, or dropped (default: accept).",
     )
     parser.add_argument(
         "--confirm",
@@ -136,7 +137,7 @@ def run_send(
     reply_to_email = mail_cfg.get("reply_to_email")
     reply_to_name = mail_cfg.get("reply_to_name")
 
-    if mode in ("qr", "pass"):
+    if mode == "qr":
         mailer = QRMailer(
             token=token,
             region=region,
@@ -148,6 +149,16 @@ def run_send(
         )
     elif mode == "accept":
         mailer = AcceptanceMailer(
+            token=token,
+            region=region,
+            sender_email=sender_email,
+            sender_name=sender_name,
+            reply_to_email=reply_to_email,
+            reply_to_name=reply_to_name,
+            event_config=event_config,
+        )
+    elif mode == "dropped":
+        mailer = DroppedMailer(
             token=token,
             region=region,
             sender_email=sender_email,
