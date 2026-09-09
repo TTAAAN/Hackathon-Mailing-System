@@ -61,7 +61,7 @@ class DroppedMailer(ZeptoMailerBase):
                 timestamp=utc_now_iso(),
             )
 
-        subject = f"Attendance Update - {self.event_config.name}"
+        subject = f"Participant Availability Update"
 
         payload = self._build_common_payload(
             to_email=applicant.email,

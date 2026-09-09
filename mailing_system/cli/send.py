@@ -1,4 +1,4 @@
-"""CLI entry point for dispatching acceptance, rejection, QR pass, and dropped participant emails."""
+"""CLI entry point for dispatching acceptance, rejection, QR, dropped, and reserved participant emails."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from mailing_system.mailers.acceptance import AcceptanceMailer
 from mailing_system.mailers.dropped import DroppedMailer
 from mailing_system.mailers.qr import QRMailer
 from mailing_system.mailers.rejection import RejectionMailer
+from mailing_system.mailers.reserved import ReservedMailer
 
 logger = get_logger("cli.send")
 
@@ -22,13 +23,13 @@ logger = get_logger("cli.send")
 def build_arg_parser() -> argparse.ArgumentParser:
     """Create the CLI argument parser for sending emails."""
     parser = argparse.ArgumentParser(
-        description="Mailing utility: send acceptance, rejection, QR pass, or dropped notification emails to recipients."
+        description="Mailing utility: send acceptance, rejection, QR, dropped, or reserved notification emails to recipients."
     )
     parser.add_argument(
         "--mode",
-        choices=("accept", "reject", "qr", "pass", "dropped"),
+        choices=("accept", "reject", "qr", "dropped", "reserved"),
         default="accept",
-        help="Type of notification to send: accept, reject, qr, pass, or dropped (default: accept).",
+        help="Type of notification to send: accept, reject, qr, dropped, or reserved (default: accept).",
     )
     parser.add_argument(
         "--confirm",
@@ -74,7 +75,7 @@ def run_send(
     table_name = db_cfg.get("table_name", "recipients")
     db_path = resolve_db_path(db_name)
 
-    require_ticket = mode in ("qr", "pass")
+    require_ticket = mode == "qr"
     logger.info("Loading recipients from %s [%s] (mode=%s)...", db_path, table_name, mode)
     try:
         recipients = load_recipients(db_path, table_name, skip_sent=True, require_ticket=require_ticket)
@@ -167,7 +168,17 @@ def run_send(
             reply_to_name=reply_to_name,
             event_config=event_config,
         )
-    else:
+    elif mode == "reserved":
+        mailer = ReservedMailer(
+            token=token,
+            region=region,
+            sender_email=sender_email,
+            sender_name=sender_name,
+            reply_to_email=reply_to_email,
+            reply_to_name=reply_to_name,
+            event_config=event_config,
+        )
+    elif mode == "reject":
         mailer = RejectionMailer(
             token=token,
             region=region,
@@ -177,6 +188,9 @@ def run_send(
             reply_to_name=reply_to_name,
             event_config=event_config,
         )
+    else:
+        logger.error("Unknown mode: %s", mode)
+        return 1
 
     logger.info("Beginning batch email delivery (%s)...", mode)
     try:
