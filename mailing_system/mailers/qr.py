@@ -90,7 +90,7 @@ class QRMailer(ZeptoMailerBase):
         payload = self._build_common_payload(
             to_email=attendee.email,
             to_name=attendee.name,
-            subject=f"Your Hackathon Entry Pass for '{attendee.name}' ({attendee.team_name})",
+            subject=f"ITM Innovation Hackathon 2026 Check-In Pass",
             html_body=QRTemplate.render_html(attendee, self.event_config),
             text_body=QRTemplate.render_plain(attendee, self.event_config),
             inline_images=[
