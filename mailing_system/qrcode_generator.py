@@ -20,8 +20,8 @@ def build_qr_image(ticket_id: str, error_correction=qrcode.constants.ERROR_CORRE
     qr = qrcode.QRCode(
         version=None,
         error_correction=error_correction,
-        box_size=10,
-        border=4,
+        box_size=12,
+        border=2,
     )
     qr.add_data(clean_ticket_id)
     qr.make(fit=True)

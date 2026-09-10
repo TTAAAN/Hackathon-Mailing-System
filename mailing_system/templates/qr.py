@@ -43,7 +43,12 @@ class QRTemplate:
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
                 <tr>
                   <td align="center" style="border: 1px solid #cccccc; padding: 18px; background-color: #ffffff; border-radius: 8px;">
-                    <img src="cid:qr_img" alt="Entry QR Code" width="200" height="200" style="display: block; width: 200px; height: 200px; max-width: 100%; border: 0;" />
+                    <!-- Increased to 240x240 for optimal scanning distance -->
+                    <img src="cid:qr_img" 
+                         alt="Entry QR Code" 
+                         width="240" 
+                         height="240" 
+                         style="display: block; width: 240px; height: 240px; max-width: 100%; border: 0;" />
                     <div style="margin-top: 14px; font-family: Courier, monospace; font-size: 16px; font-weight: bold; color: #111111; letter-spacing: 0.5px;">
                       Point to Scanner
                     </div>
