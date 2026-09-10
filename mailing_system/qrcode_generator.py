@@ -12,8 +12,7 @@ from io import BytesIO
 import qrcode
 
 
-def build_qr_image(ticket_id: str, error_correction=qrcode.constants.ERROR_CORRECT_H):
-    """Create a QR image for the supplied ticket ID."""
+def build_qr_image(ticket_id: str, error_correction=qrcode.constants.ERROR_CORRECT_M):
     clean_ticket_id = str(ticket_id or "").strip()
     if not clean_ticket_id:
         raise ValueError("ticket_id is required to generate a QR code.")
@@ -26,7 +25,7 @@ def build_qr_image(ticket_id: str, error_correction=qrcode.constants.ERROR_CORRE
     )
     qr.add_data(clean_ticket_id)
     qr.make(fit=True)
-    return qr.make_image(fill_color="#090C22", back_color="#00E5FF")
+    return qr.make_image(fill_color="#000000", back_color="#FFFFFF")
 
 
 def build_qr_png_bytes(ticket_id: str, error_correction=qrcode.constants.ERROR_CORRECT_H) -> bytes:
