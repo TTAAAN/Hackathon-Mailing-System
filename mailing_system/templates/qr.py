@@ -14,7 +14,6 @@ class QRTemplate:
     @staticmethod
     def render_html(attendee: Union[Attendee, Applicant], event: EventConfig) -> str:
         safe_name = html.escape(str(attendee.name))
-        safe_team = html.escape(str(attendee.team_name))
         safe_ticket_id = html.escape(str(attendee.ticket_id))
         safe_email = html.escape(str(attendee.email))
         safe_event_name = html.escape(str(event.name))
@@ -37,7 +36,7 @@ class QRTemplate:
           <tr>
             <td style="padding-bottom: 16px; font-size: 15px; color: #333333; line-height: 1.6;">
               Hi {safe_name},<br /><br />
-              Once again, <strong>huge congratulations on '{safe_team}' being selected for the {safe_event_name}!</strong><br /><br />
+              Once again, <strong>huge congratulations on being selected for the {safe_event_name}!</strong><br /><br />
               Below is your <strong>official check-in pass</strong>. You will need this pass to access the venue on the day of the event.
             </td>
           </tr>
@@ -71,7 +70,6 @@ class QRTemplate:
                <table role="presentation" width="100%" cellspacing="0" cellpadding="8" border="0" style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee; font-size: 14px;">
                  <tr><td width="120" style="color: #666666; font-weight: bold;">Attendee Name:</td><td style="color: #111111;">{safe_name}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Check-in ID:</td><td style="color: #111111;">{safe_ticket_id}</td></tr>
-                 <tr><td style="color: #666666; font-weight: bold;">Team Name:</td><td style="color: #111111;">{safe_team}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Email:</td><td style="color: #111111;">{safe_email}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Venue:</td><td style="color: #111111;">{safe_venue}</td></tr>
                  <tr><td style="color: #666666; font-weight: bold;">Date:</td><td style="color: #111111;">{safe_date}</td></tr>
@@ -111,12 +109,11 @@ class QRTemplate:
         return (
             f"{event.name.upper()} — YOUR CHECK-IN PASS\n\n"
             f"Hi {attendee.name},\n\n"
-            f"Congratulations on '{attendee.team_name}' being selected for the {event.name}!\n\n"
+            f"Congratulations on being selected for the {event.name}!\n\n"
             f"Below are your check-in details. Please present your Check-in ID or QR code at the registration desk.\n\n"
             f"PASS DETAILS\n"
             f"Attendee Name: {attendee.name}\n"
             f"Check-in ID:   {attendee.ticket_id}\n"
-            f"Team Name:     {attendee.team_name}\n"
             f"Email:         {attendee.email}\n"
             f"Venue:         {event.venue}\n"
             f"Date:          {event.date}\n\n"
